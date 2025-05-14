@@ -1,0 +1,150 @@
+<mat-card class="movimientos-card">
+  <!-- Encabezado con título y botones -->
+  <mat-card-header class="header-container">
+    <div class="botones-izquierda">
+      <button mat-mini-fab class="boton-pdf" (click)="generarPDF()">
+        <mat-icon>picture_as_pdf</mat-icon>
+      </button>
+      <button mat-mini-fab class="boton-verde" (click)="nuevo()"
+        *ngIf="userRole === 'Administrador' || userRole === 'Operativo'">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+    <mat-card-title class="titulo">Lista de Movimientos</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <!-- Barra de búsqueda y botón de filtros -->
+    <div class="filter-container">
+      <mat-form-field class="search-field">
+        <mat-label>Buscar movimiento</mat-label>
+        <input matInput (keyup)="aplicarFiltroTexto($event)" placeholder="Escriba nombre del trabajador, Almacen o Tipo de movimiento">
+      </mat-form-field>
+
+      <button mat-icon-button [matMenuTriggerFor]="menuFiltros" #menuTrigger="matMenuTrigger">
+        <mat-icon>filter_list</mat-icon>
+      </button>
+
+      <mat-menu #menuFiltros="matMenu">
+        <button mat-menu-item (click)="ordenar('asc'); menuTrigger.closeMenu()">
+          <mat-icon>arrow_upward</mat-icon> Orden A-Z
+        </button>
+        <button mat-menu-item (click)="ordenar('desc'); menuTrigger.closeMenu()">
+          <mat-icon>arrow_downward</mat-icon> Orden Z-A
+        </button>
+        <mat-divider></mat-divider>
+
+        <mat-form-field class="filter-field">
+          <mat-label>Filtrar por tipo de movimiento</mat-label>
+          <mat-select [(ngModel)]="filtroTipo" (selectionChange)="filtrarPorTipoMovimiento()">
+            <mat-option *ngFor="let tipo of tiposMovimiento" [value]="tipo.nombre">
+              {{ tipo.nombre }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="filter-field">
+          <mat-label>Filtrar por almacén</mat-label>
+          <mat-select [(ngModel)]="filtroAlmacen" (selectionChange)="filtrarPorAlmacen(); menuTrigger.closeMenu()">
+            <mat-option *ngFor="let almacen of almacenes" [value]="almacen.nombre">
+              {{ almacen.nombre }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="resetearFiltros(); menuTrigger.closeMenu()">
+          <mat-icon>clear</mat-icon> Restablecer filtros
+        </button>
+      </mat-menu>
+    </div>
+
+    <!-- Tabla de movimientos con detalles expandibles -->
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z2 table-container" multiTemplateDataRows>
+      <!-- Columnas principales (se mantienen igual) -->
+      <ng-container matColumnDef="IDMovimiento">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let element"> {{ element.IDMovimiento }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Trabajador">
+        <th mat-header-cell *matHeaderCellDef> Trabajador </th>
+        <td mat-cell *matCellDef="let element"> {{ element.NombreTrabajador }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="FechaMovimiento">
+        <th mat-header-cell *matHeaderCellDef> Fecha movimiento </th>
+        <td mat-cell *matCellDef="let element"> {{ element.FechaMovimiento | date }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="TipoMovimiento">
+        <th mat-header-cell *matHeaderCellDef> Tipo movimiento </th>
+        <td mat-cell *matCellDef="let element"> {{ element.TipoMovimiento }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Almacen">
+        <th mat-header-cell *matHeaderCellDef> Almacén </th>
+        <td mat-cell *matCellDef="let element"> {{ element.NombreAlmacen }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Acciones">
+        <th mat-header-cell *matHeaderCellDef> Acciones </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-mini-fab color="primary" (click)="editar(element)"
+            *ngIf="userRole === 'Administrador' || userRole === 'Operativo'">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-mini-fab color="warn" (click)="eliminar(element)" *ngIf="userRole === 'Administrador'">
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button mat-mini-fab color="warn" (click)="generarPDFIndividual(element)">
+            <mat-icon>picture_as_pdf</mat-icon>
+          </button>
+          <button mat-icon-button (click)="element.expandido = !element.expandido">
+            <mat-icon>{{element.expandido ? 'expand_less' : 'expand_more'}}</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <!-- Columna expandible para detalles -->
+      <ng-container matColumnDef="detallesExpandidos">
+        <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length"
+          [style.display]="element.expandido ? 'table-cell' : 'none'">
+          <div class="detalle-expandido" [@detailExpand]="element.expandido ? 'expanded' : 'collapsed'">
+            <h4>Detalles del Movimiento</h4>
+            <table class="detalle-table">
+              <thead>
+                <tr>
+                  <th>Material</th>
+                  <th>Cantidad</th>
+                  <th>Costo Unitario</th>
+                  <th>Costo Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let detalle of element.Detalles">
+                  <td>{{ detalle.nombreMaterial }}</td>
+                  <td>{{ detalle.cantidad }}</td>
+                  <td>{{ detalle.costoUnitario | currency }}</td>
+                  <td>{{ detalle.costoTotal | currency }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="element-row"
+        [class.expandido]="element.expandido">
+      </tr>
+      <tr mat-row *matRowDef="let row; columns: ['detallesExpandidos']" class="detalle-row"
+        [style.display]="row.expandido ? 'table-row' : 'none'">
+      </tr>
+    </table>
+
+    <!-- Paginador -->
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+  </mat-card-content>
+</mat-card>

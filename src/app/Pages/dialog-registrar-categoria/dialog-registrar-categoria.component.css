@@ -1,0 +1,54 @@
+.dialog-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    width: 100%;
+  }
+  
+  .full-width {
+    width: 100%;
+  }
+  
+  mat-form-field {
+    width: 100%;
+  }
+  
+  mat-dialog-container {
+    border-radius: 12px;
+    padding: 24px;
+  }
+  
+  .dialog-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+  }  
+  
+  mat-dialog-actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+  }
+  
+  button {
+    align-items: center;
+    font-weight: normal;
+  }
+  
+  button[color="primary"] {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  button[color="primary"]:hover {
+    background-color: #45a049;
+  }
+  
+  button[mat-button] {
+    color: #333;
+  }
+  

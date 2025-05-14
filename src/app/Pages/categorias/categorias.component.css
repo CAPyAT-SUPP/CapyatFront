@@ -1,0 +1,96 @@
+/* Estilos generales */
+mat-card {
+    width: 60%; /* Cambié el ancho a 100% para que ocupe todo el espacio */
+    margin: 50px auto;
+}
+
+/* Encabezado con botones alineados */
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px;
+}
+
+.botones-izquierda {
+    display: flex;
+    gap: 10px;
+}
+
+.boton-verde {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.boton-verde:hover {
+    background-color: #388E3C;
+}
+
+.boton-pdf {
+    background-color: rgb(197, 47, 47);
+    color: white;
+}
+
+.boton-pdf:hover {
+    background-color: rgb(150, 30, 30);
+}
+
+/* Título alineado a la derecha */
+.titulo {
+    text-align: right;
+    flex-grow: 1;
+}
+
+/* Contenedor de filtros */
+.filter-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.search-field {
+    flex: 1;
+}
+
+.filter-field {
+    width: 100%;
+}
+
+/* Estilos de la tabla */
+.table-container {
+    margin-top: 20px;
+    width: 100%; /* Asegura que la tabla ocupe todo el espacio disponible */
+}
+
+mat-table {
+    width: 100%; /* La tabla ahora ocupará todo el ancho disponible */
+    table-layout: fixed; /* Controla la distribución de las columnas */
+}
+
+.mat-header-cell, .mat-cell {
+    padding: 8px; /* Ajusta el padding para reducir el espacio innecesario */
+    text-align: left;
+    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+}
+
+.mat-column-accion {
+    width: 80px; /* Ajusta el ancho de la columna de acciones */
+    text-align: center;
+}
+
+.mat-column-IDCategoria, .mat-column-NombreCategoria, .mat-column-Descripcion {
+    width: auto; /* Ajusta automáticamente el ancho de las otras columnas */
+}
+
+/* Estilo para los botones en la columna de acciones */
+.mat-column-accion {
+    width: auto; /* Ajusta el ancho de la columna para que se ajuste al contenido */
+    justify-content: center; /* Centra los botones en la celda */
+    gap: 10px; /* Agrega un espacio entre los botones */
+  }
+  
+  mat-mini-fab {
+    width: 36px;
+    height: 36px;
+  }
+  

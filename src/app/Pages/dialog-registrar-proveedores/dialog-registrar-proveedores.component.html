@@ -1,0 +1,73 @@
+<mat-dialog-content class="dialog-content">
+    <h2 mat-dialog-title>Registrar Proveedor</h2>
+  
+    <!-- Nombre -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Nombre del Proveedor</mat-label>
+      <input matInput [(ngModel)]="nuevoProveedor.nombreProveedor" required>
+    </mat-form-field>
+  
+    <!-- Clave -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Clave</mat-label>
+      <input matInput [(ngModel)]="nuevoProveedor.claveProveedor" required>
+    </mat-form-field>
+  
+    <!-- Calle -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Calle</mat-label>
+      <input matInput [(ngModel)]="nuevoProveedor.calleProveedor">
+    </mat-form-field>
+  
+    <!-- Número Interior -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Número Interior</mat-label>
+      <input matInput type="number" [(ngModel)]="nuevoProveedor.noIntProveedor">
+    </mat-form-field>
+  
+    <!-- Número Exterior -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Número Exterior</mat-label>
+      <input matInput type="number" [(ngModel)]="nuevoProveedor.noExtProveedor">
+    </mat-form-field>
+  
+    <!-- Colonia -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Colonia</mat-label>
+      <input matInput [(ngModel)]="nuevoProveedor.coloniaProveedor">
+    </mat-form-field>
+  
+    <!-- Código Postal -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Código Postal</mat-label>
+      <input matInput type="number" [(ngModel)]="nuevoProveedor.cp">
+    </mat-form-field>
+  
+    <!-- Estado -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Estado</mat-label>
+      <input matInput [(ngModel)]="nuevoProveedor.estado">
+    </mat-form-field>
+  
+    <!-- Municipio -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Municipio</mat-label>
+      <input matInput [(ngModel)]="nuevoProveedor.municipio">
+    </mat-form-field>
+  
+    <!-- RFC -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>RFC</mat-label>
+      <input matInput [(ngModel)]="nuevoProveedor.rfc">
+    </mat-form-field>
+  
+  </mat-dialog-content>
+  
+  <mat-dialog-actions align="center">
+    <button mat-button (click)="cerrar()">Cancelar</button>
+    <button mat-flat-button color="primary" (click)="registrar()" 
+      [disabled]="!nuevoProveedor.nombreProveedor || !nuevoProveedor.claveProveedor">
+      Guardar
+    </button>
+  </mat-dialog-actions>
+  

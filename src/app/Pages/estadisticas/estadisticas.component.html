@@ -1,0 +1,84 @@
+<div class="estadisticas-container">
+  <h1>Estadísticas generales</h1>
+
+  <!-- Fila 1: Costo total (ancho completo) -->
+  <mat-card class="card card-full-width">
+    <mat-card-title>Costo total del inventario</mat-card-title>
+    <mat-card-content class="card-content-centered">
+      <h2>${{ costoTotalInventario | number:'1.2-2' }}</h2>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Fila 2: Dos tarjetas de gráficos -->
+  <div class="middle-row">
+    <!-- Costo de salidas por almacén -->
+    <mat-card class="card">
+      <mat-card-title>Costo de salidas por almacén</mat-card-title>
+      <mat-card-content>
+        <canvas baseChart [data]="pieChartDataFormatted" [labels]="pieChartLabels" [type]="'pie'"></canvas>
+        <div class="mt-4">
+          <h4>Detalle de costos</h4>
+          <ul>
+            <li *ngFor="let item of costoTotalPorAlmacen">
+              {{ item.zona }}: {{ item.costoTotal | currency:'MXN':'symbol':'1.2-2' }}
+            </li>
+          </ul>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Total de materiales por almacén -->
+    <mat-card class="card">
+      <mat-card-title>Total de materiales por almacén</mat-card-title>
+      <mat-card-content>
+        <canvas baseChart [data]="materialesAlmacenChartData" [labels]="labelsMaterialesAlmacen" [type]="'doughnut'"></canvas>
+        <div class="mt-4">
+          <h4>Detalle de materiales</h4>
+          <ul>
+            <li *ngFor="let item of totalMaterialesPorAlmacen">
+              {{ item.zona }}: {{ item.totalMateriales }}
+            </li>
+          </ul>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Fila 3: Entradas entre fechas (ancho completo) -->
+  <mat-card class="card card-full-width">
+    <mat-card-title>Entradas entre fechas</mat-card-title>
+    <mat-card-content>
+      <div class="date-fields-container">
+        <!-- Fecha Desde -->
+        <mat-form-field appearance="fill">
+          <mat-label>Desde</mat-label>
+          <input matInput [matDatepicker]="picker1" [(ngModel)]="fechaInicio" required>
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+
+        <!-- Fecha Hasta -->
+        <mat-form-field appearance="fill">
+          <mat-label>Hasta</mat-label>
+          <input matInput [matDatepicker]="picker2" [(ngModel)]="fechaFin" required>
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <button mat-raised-button color="primary" (click)="consultarEntradas()">Consultar</button>
+
+      <div *ngIf="entradasEntreFechas.length > 0" class="results-container">
+        <ul>
+          <li *ngFor="let entrada of entradasEntreFechas">
+            {{ entrada.periodo }} - {{ entrada.entradas }} entradas - {{ entrada.salidas }} salidas
+          </li>
+        </ul>
+      </div>
+
+      <div *ngIf="entradasEntreFechas?.length === 0" class="no-entradas">
+        No hay entradas entre las fechas seleccionadas.
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

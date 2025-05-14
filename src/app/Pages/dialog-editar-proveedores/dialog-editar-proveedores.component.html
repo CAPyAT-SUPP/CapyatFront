@@ -1,0 +1,61 @@
+<h2 mat-dialog-title>Editar Proveedor</h2>
+<mat-dialog-content>
+  <form>
+    <mat-form-field>
+      <mat-label>Nombre del Proveedor</mat-label>
+      <input matInput [(ngModel)]="proveedor.nombreProveedor" name="nombreProveedor" required (ngModelChange)="verificarCambios()"/>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Clave del Proveedor</mat-label>
+      <input matInput [(ngModel)]="proveedor.claveProveedor" name="claveProveedor" required (ngModelChange)="verificarCambios()"/>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Calle</mat-label>
+      <input matInput [(ngModel)]="proveedor.calleProveedor" name="calleProveedor" required (ngModelChange)="verificarCambios()"/>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Número Interior</mat-label>
+      <input matInput type="number" [(ngModel)]="proveedor.noIntProveedor" name="noIntProveedor" (ngModelChange)="verificarCambios()"/>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Número Exterior</mat-label>
+      <input matInput type="number" [(ngModel)]="proveedor.noExtProveedor" name="noExtProveedor" (ngModelChange)="verificarCambios()"/>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Colonia</mat-label>
+      <input matInput [(ngModel)]="proveedor.coloniaProveedor" name="coloniaProveedor" required (ngModelChange)="verificarCambios()"/>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Código Postal</mat-label>
+      <input matInput type="number" [(ngModel)]="proveedor.cp" name="cp" required (ngModelChange)="verificarCambios()"/>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Estado</mat-label>
+      <input matInput [(ngModel)]="proveedor.estado" name="estado" required (ngModelChange)="verificarCambios()"/>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Municipio</mat-label>
+      <input matInput [(ngModel)]="proveedor.municipio" name="municipio" required (ngModelChange)="verificarCambios()"/>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>RFC</mat-label>
+      <input matInput [(ngModel)]="proveedor.rfc" name="rfc" required (ngModelChange)="verificarCambios()"/>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cerrar()">Cancelar</button>
+  <button mat-button color="primary" (click)="guardarCambios()" [disabled]="!formularioValido">
+    Guardar
+  </button>
+</mat-dialog-actions>

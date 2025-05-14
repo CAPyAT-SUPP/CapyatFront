@@ -1,0 +1,154 @@
+<mat-card class="materiales-card">
+  <!-- Encabezado con título y botones -->
+  <mat-card-header class="header-container">
+    <div class="botones-izquierda">
+      <button mat-mini-fab class="boton-pdf" (click)="generarPDF()">
+        <mat-icon>picture_as_pdf</mat-icon>
+      </button>
+      <button mat-mini-fab class="boton-verde" (click)="nuevo()" *ngIf="userRole === 'Administrador' || userRole === 'Operativo'">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+    <mat-card-title class="titulo">Lista de Materiales</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <!-- Barra de búsqueda y botón de filtros -->
+    <div class="filter-container">
+      <mat-form-field class="search-field">
+        <mat-label>Buscar material</mat-label>
+        <input matInput (keyup)="aplicarFiltro($event)" placeholder="Escriba el nombre...">
+      </mat-form-field>
+
+      <button mat-icon-button [matMenuTriggerFor]="menuFiltros" #menuTrigger="matMenuTrigger">
+        <mat-icon>filter_list</mat-icon>
+      </button>
+
+      <mat-menu #menuFiltros="matMenu">
+        <button mat-menu-item (click)="ordenar('asc'); menuTrigger.closeMenu()">
+          <mat-icon>arrow_upward</mat-icon> Orden A-Z
+        </button>
+        <button mat-menu-item (click)="ordenar('desc'); menuTrigger.closeMenu()">
+          <mat-icon>arrow_downward</mat-icon> Orden Z-A
+        </button>
+        <mat-divider></mat-divider>
+      
+        <!-- Filtros por Categoría -->
+        <mat-form-field appearance="fill">
+          <mat-label>Filtrar por Categoría</mat-label>
+          <mat-select [(value)]="filtroCategoria" (selectionChange)="aplicarFiltroCategoria()">
+            <mat-option value="">Todas las Categorías</mat-option>
+            <mat-option *ngFor="let categoria of categorias" [value]="categoria.idCategoria">
+              {{ categoria.nombreCategoria }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-divider></mat-divider>
+      
+        <!-- Filtros por Proveedor -->
+        <mat-form-field appearance="fill">
+          <mat-label>Filtrar por Proveedor</mat-label>
+          <mat-select [(value)]="filtroProveedor" (selectionChange)="aplicarFiltroProveedor()">
+            <mat-option value="">Todos los Proveedores</mat-option>
+            <mat-option *ngFor="let proveedor of proveedores" [value]="proveedor.idProveedor">
+              {{ proveedor.nombreProveedor }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      
+        <mat-divider></mat-divider>
+        
+        <button mat-menu-item (click)="resetearFiltros(); menuTrigger.closeMenu()">
+          <mat-icon>clear</mat-icon> Restablecer filtros
+        </button>
+      </mat-menu>      
+      
+    </div>
+
+    <!-- Tabla de materiales -->
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z2 table-container">
+
+      <ng-container matColumnDef="NombreMaterial">
+        <th mat-header-cell *matHeaderCellDef> Nombre del Material </th>
+        <td mat-cell *matCellDef="let element"> {{ element.NombreMaterial }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="DescripcionMaterial">
+        <th mat-header-cell *matHeaderCellDef> Descripción </th>
+        <td mat-cell *matCellDef="let element"> {{ element.DescripcionMaterial }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="CantidadMaterial">
+        <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+        <td mat-cell *matCellDef="let element"> {{ element.CantidadMaterial }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="CostoUnitario">
+        <th mat-header-cell *matHeaderCellDef> Costo Unitario </th>
+        <td mat-cell *matCellDef="let element"> {{ element.CostoUnitario | currency }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="CostoTotal">
+        <th mat-header-cell *matHeaderCellDef> Costo Total </th>
+        <td mat-cell *matCellDef="let element"> {{ element.CostoTotal | currency }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Descuento">
+        <th mat-header-cell *matHeaderCellDef> Descuento </th>
+        <td mat-cell *matCellDef="let element"> {{ element.Descuento | percent }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="IVA">
+        <th mat-header-cell *matHeaderCellDef> IVA </th>
+        <td mat-cell *matCellDef="let element"> {{ element.IVA | percent }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="StockActual">
+        <th mat-header-cell *matHeaderCellDef> Stock Actual </th>
+        <td mat-cell *matCellDef="let element"> {{ element.StockActual }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Imagen">
+        <th mat-header-cell *matHeaderCellDef> Imagen </th>
+        <td mat-cell *matCellDef="let element">
+          <img *ngIf="element.Imagen" 
+               [src]="getImagen(element.Imagen)" 
+               alt="Imagen del material" 
+               width="50" 
+               height="50"
+               style="border-radius: 5px; object-fit: cover;"/>
+        </td>
+      </ng-container>
+      
+
+      <ng-container matColumnDef="IDCategoria">
+        <th mat-header-cell *matHeaderCellDef> Categoría </th>
+        <td mat-cell *matCellDef="let element"> {{ getCategoriaNombre(element.IDCategoria) }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="IDProveedor">
+        <th mat-header-cell *matHeaderCellDef> Proveedor </th>
+        <td mat-cell *matCellDef="let element"> {{ getProveedorNombre(element.IDProveedor) }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="accion">
+        <th mat-header-cell *matHeaderCellDef> Acciones </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-mini-fab color="primary" (click)="editar(element)" *ngIf="userRole === 'Administrador' || userRole === 'Operativo'">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-mini-fab color="warn" (click)="eliminar(element)"*ngIf="userRole === 'Administrador'">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <!-- Paginador -->
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+  </mat-card-content>
+</mat-card>

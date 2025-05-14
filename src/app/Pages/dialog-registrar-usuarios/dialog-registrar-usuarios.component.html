@@ -1,0 +1,55 @@
+<h2 mat-dialog-title>Registrar Usuario</h2>
+
+<form [formGroup]="form" (ngSubmit)="guardar()" mat-dialog-content>
+
+  <mat-form-field appearance="outline" class="w-100 mb-3">
+    <mat-label>Nombre de usuario</mat-label>
+    <input matInput formControlName="nombreUs" placeholder="Ingrese nombre de usuario">
+    <mat-error *ngIf="form.get('nombreUs')?.hasError('required')">
+      El nombre es obligatorio
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="w-100 mb-3">
+    <mat-label>Correo</mat-label>
+    <input matInput formControlName="correoUs" placeholder="Ingrese correo electrónico">
+    <mat-error *ngIf="form.get('correoUs')?.hasError('required')">
+      El correo es obligatorio
+    </mat-error>
+    <mat-error *ngIf="form.get('correoUs')?.hasError('email')">
+      Formato de correo inválido
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="w-100 mb-3">
+    <mat-label>Contraseña</mat-label>
+    <input matInput type="password" formControlName="contraUs" placeholder="Ingrese contraseña">
+    <mat-error *ngIf="form.get('contraUs')?.hasError('required')">
+      La contraseña es obligatoria
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width mb-3">
+    <mat-label>Rol</mat-label>
+    <mat-select formControlName="idRol">
+        <mat-option *ngFor="let rol of roles" [value]="rol.idRol">
+            {{ rol.nombreRol }}
+          </mat-option>          
+    </mat-select>
+  </mat-form-field>
+  
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Trabajador</mat-label>
+    <mat-select formControlName="idTrabajador" required>
+      <mat-option *ngFor="let t of trabajadores" [value]="t.idTrabajador">
+        {{ t.nombreTrabajador }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  
+  <div class="d-flex justify-content-end gap-2 mt-4">
+    <button mat-button color="warn" type="button" (click)="cancelar()">Cancelar</button>
+    <button mat-raised-button color="primary" type="submit">Guardar</button>
+  </div>
+
+</form>

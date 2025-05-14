@@ -1,0 +1,92 @@
+<mat-card class="usuarios-card">
+  <mat-card-header class="header-container">
+    <div class="botones-izquierda">
+      <button mat-mini-fab class="boton-pdf" (click)="generarPDF()">
+        <mat-icon>picture_as_pdf</mat-icon>
+      </button>
+      <button mat-mini-fab class="boton-verde" (click)="nuevo()" *ngIf="userRole === 'Administrador' || userRole === 'Operativo'">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+    <mat-card-title class="titulo">Lista de Usuarios</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="filter-container">
+      <mat-form-field class="search-field">
+        <mat-label>Buscar usuario</mat-label>
+        <input matInput (keyup)="aplicarFiltro($event)" placeholder="Escriba el nombre...">
+      </mat-form-field>
+
+      <button mat-icon-button [matMenuTriggerFor]="menuFiltros" #menuTrigger="matMenuTrigger">
+        <mat-icon>filter_list</mat-icon>
+      </button>
+
+      <mat-menu #menuFiltros="matMenu">
+        <button mat-menu-item (click)="ordenar('asc'); menuTrigger.closeMenu()">
+          <mat-icon>arrow_upward</mat-icon> Orden A-Z
+        </button>
+        <button mat-menu-item (click)="ordenar('desc'); menuTrigger.closeMenu()">
+          <mat-icon>arrow_downward</mat-icon> Orden Z-A
+        </button>
+        <mat-divider></mat-divider>
+
+        <mat-form-field class="filter-field">
+          <mat-label>Filtrar por rol</mat-label>
+          <mat-select [(ngModel)]="filtroRol" (selectionChange)="filtrarPorRol(); menuTrigger.closeMenu()">
+            <mat-option *ngFor="let rol of roles" [value]="rol.idRol">
+              {{ rol.nombreRol }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="resetearFiltros(); menuTrigger.closeMenu()">
+          <mat-icon>clear</mat-icon> Restablecer filtros
+        </button>
+      </mat-menu>
+    </div>
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z2 table-container">
+      <ng-container matColumnDef="nombreUs">
+        <th mat-header-cell *matHeaderCellDef> Nombre </th>
+        <td mat-cell *matCellDef="let element"> {{ element.nombreUsuario }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="correoUs">
+        <th mat-header-cell *matHeaderCellDef> Correo </th>
+        <td mat-cell *matCellDef="let element"> {{ element.correoUsuario }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="contraUs">
+        <th mat-header-cell *matHeaderCellDef> Contraseña </th>
+        <td mat-cell *matCellDef="let element"> {{ element.contrasenaUsuario }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="nombreRol">
+        <th mat-header-cell *matHeaderCellDef> Rol </th>
+        <td mat-cell *matCellDef="let usuario"> {{usuario.nombreRol || 'Sin rol'}} </td>
+      </ng-container>
+      
+            
+
+      <ng-container matColumnDef="accion">
+        <th mat-header-cell *matHeaderCellDef> Acciones </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-mini-fab color="primary" (click)="editar(element)" *ngIf="userRole === 'Administrador' || userRole === 'Operativo'">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-mini-fab color="warn" (click)="eliminar(element)" *ngIf="userRole === 'Administrador'">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+  </mat-card-content>
+</mat-card>

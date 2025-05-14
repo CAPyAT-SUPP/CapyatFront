@@ -1,0 +1,10 @@
+<mat-dialog-content class="dialog-content">
+    <h2 class="title">Eliminar Material</h2>
+    <p>¿Estás seguro de que quieres eliminar el material <strong>{{ material.NombreMaterial }}</strong>?</p>
+  </mat-dialog-content>
+  
+  <mat-dialog-actions class="dialog-actions">
+    <button mat-button (click)="cerrar()">Cancelar</button>
+    <button mat-flat-button color="warn" (click)="confirmarEliminar()">Eliminar</button>
+  </mat-dialog-actions>
+  

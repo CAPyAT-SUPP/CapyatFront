@@ -1,0 +1,71 @@
+.dialog-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
+  width: 100%;
+}
+
+.full-width {
+  width: 100%;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+mat-dialog-container {
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.dialog-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+
+/* Espaciado entre campos */
+.mb-3 {
+  margin-bottom: 1rem;
+}
+
+/* Espaciado superior para botones */
+.mt-4 {
+  margin-top: 1.5rem;
+}
+
+/* Separación horizontal entre botones */
+.gap-2 {
+  gap: 0.5rem;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.justify-content-end {
+  justify-content: flex-end;
+}
+
+/* Botones */
+button {
+  align-items: center;
+  font-weight: normal;
+}
+
+button[color="primary"] {
+  background-color: #4CAF50;
+  color: white;
+}
+
+button[color="primary"]:hover {
+  background-color: #45a049;
+}
+
+button[mat-button] {
+  color: #333;
+}

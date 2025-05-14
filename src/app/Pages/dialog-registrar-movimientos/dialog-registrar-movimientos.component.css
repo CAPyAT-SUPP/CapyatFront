@@ -1,0 +1,196 @@
+/* ========== CONTENEDOR DEL DIÁLOGO ========== */
+.dialog-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 24px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+@media (max-width: 767px) {
+  .dialog-container {
+    padding: 16px;
+  }
+}
+
+.grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr 1fr;
+}
+
+.grid-cols-1 {
+  grid-template-columns: 1fr;
+}
+
+.grid-2x2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.grid-2x2 mat-form-field {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .grid-2x2 {
+    grid-template-columns: 1fr;
+  }
+
+  .materials-table {
+    overflow-x: auto;
+  }
+
+  .materials-table table {
+    min-width: 600px;
+  }
+
+  .materials-table th,
+  .materials-table td {
+    padding: 8px;
+  }
+}
+
+@media (min-width: 768px) {
+  .md\:grid-cols-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ========== FORMULARIOS ========== */
+mat-form-field {
+  width: 100%;
+}
+
+mat-form-field.mat-form-field {
+  background-color: #fefefe;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.mat-select-value {
+  padding-left: 4px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+input[readonly] {
+  background-color: #f4f4f4;
+  border-radius: 4px;
+  border: none;
+  padding: 8px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* ========== TABLA DE MATERIALES ========== */
+.materials-table {
+  width: 100%;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e0e0e0;
+  background-color: #fff;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.materials-table th {
+  position: sticky;
+  top: 0;
+  background-color: #f5f7fa;
+  color: #37474f;
+  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  z-index: 2;
+}
+
+.materials-table td {
+  padding: 10px 12px;
+  font-size: 14px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.materials-table tr:hover {
+  background-color: #f9fcff;
+}
+
+.materials-table mat-form-field,
+.materials-table input[matInput] {
+  width: 100%;
+  margin: 0;
+}
+
+/* ========== INPUT EN mat-option (búsqueda) ========== */
+mat-option input[matInput] {
+  padding: 6px 8px;
+  font-size: 14px;
+}
+
+/* ========== mat-select ========== */
+.mat-select-panel {
+  border-radius: 8px !important;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1) !important;
+  background-color: #ffffff;
+}
+
+.mat-option {
+  font-size: 14px;
+  padding: 10px 16px;
+  transition: background-color 0.2s ease;
+}
+
+.mat-option:hover,
+.mat-option.mat-selected {
+  background-color: #e3f2fd !important;
+  color: #0d47a1 !important;
+  font-weight: 600;
+}
+
+/* ========== ENCABEZADOS Y TÍTULOS ========== */
+mat-dialog-title, 
+h2[mat-dialog-title], 
+h3[mat-dialog-title] {
+  text-align: center;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+h3[mat-dialog-title] {
+  font-weight: 300;
+}
+
+/* ========== BOTONES ========== */
+button {
+  margin-top: 10px;
+}
+
+mat-dialog-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 20px;
+}
+
+mat-dialog-actions button {
+  min-width: 100px;
+}
+
+/* ========== ESPACIADO ENTRE SECCIONES ========== */
+.my-4.text-right {
+  margin-top: 1.5rem !important;
+  margin-bottom: 2rem !important;
+}
+
+.text-right.mt-4 {
+  margin-top: 2rem !important;
+}

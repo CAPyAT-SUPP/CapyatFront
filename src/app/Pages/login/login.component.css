@@ -1,0 +1,191 @@
+:host {
+  display: block;
+  height: 100vh;
+  background-color: #7a003c;
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h20v20H0V0zm10 17a7 7 0 1 0 0-14 7 7 0 0 0 0 14zm20 0a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM10 37a7 7 0 1 0 0-14 7 7 0 0 0 0 14zm10-17h20v20H20V20zm10 17a7 7 0 1 0 0-14 7 7 0 0 0 0 14z' fill='%23bc955b' fill-opacity='0.4' fill-rule='evenodd'/%3E%3C/svg%3E");
+  background-size: 120px 120px;
+  background-repeat: repeat;
+  background-position: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Contenedor general del login */
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+/* Card principal del login */
+.login-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+}
+
+.login-card:hover {
+  transform: scale(1.02);
+}
+
+/* Card del logo */
+.logo-card {
+  margin-bottom: 1.5rem;
+}
+
+/* Logo institucional */
+.logo {
+  width: 180px;
+}
+
+/* Card del formulario */
+.form-card {
+  width: 100%;
+}
+
+/* Título */
+h2 {
+  font-size: 26px;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+/* Campos del formulario */
+.form-group {
+  margin-bottom: 1.2rem;
+  text-align: center; /* Centramos el texto dentro de los campos */
+}
+
+label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #555;
+}
+
+input.form-control {
+  width: 80%; /* Reducir el tamaño de los campos de entrada */
+  padding: 0.75rem;
+  font-size: 14px; /* Reducir tamaño de fuente */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: border-color 0.2s;
+  margin: 0 auto; /* Centrado horizontal */
+}
+
+/* Centrar el texto dentro de los campos de entrada */
+input.form-control {
+  text-align: center;
+}
+
+input.form-control:focus {
+  border-color: #7a003c;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  outline: none;
+}
+
+/* Botón de login */
+.btn-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+button.btn {
+  width: auto;
+  min-width: 140px;
+  padding: 0.5rem 1rem;
+  font-size: 14px;
+  background-color: #7a003c;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+button.btn:hover {
+  background-color: #0056b3;
+}
+
+button.btn:disabled {
+  background-color: #a0a0a0;
+  cursor: not-allowed;
+}
+
+/* Errores */
+.error-message,
+.error {
+  color: #d32f2f;
+  font-size: 13px;
+  margin-top: 0.5rem;
+}
+
+/* Estilo responsive opcional */
+@media (max-width: 480px) {
+  .login-card {
+    padding: 1.5rem;
+    border-radius: 12px;
+  }
+
+  h2 {
+    font-size: 22px;
+  }
+
+  .logo {
+    width: 150px;
+  }
+
+  input.form-control {
+    width: 90%; /* Ajustar el ancho de los campos en pantallas pequeñas */
+  }
+}
+
+.login-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: fadeInScale 0.6s ease-out;
+  margin-top: 20px;
+  font-size: 1.5rem;
+  color: #7a003c;
+}
+
+.checkmark {
+  font-size: 4rem;
+  animation: pop 0.4s ease;
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0);
+  }
+  80% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+

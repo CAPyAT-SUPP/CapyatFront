@@ -1,0 +1,66 @@
+<div class="login-wrapper">
+  <div class="login-card">
+    
+    <!-- Card del logo -->
+    <div class="logo-card">
+      <img src="../../../assets/logo.png" alt="Logo Institución" class="logo" />
+    </div>
+    
+    <!-- Card del formulario -->
+    <div class="form-card">
+
+      <!-- Mostrar animación si está iniciando sesión -->
+      <div *ngIf="animandoLogin" class="login-success">
+        <div class="checkmark">✔️</div>
+        <p>¡Bienvenido!</p>
+      </div>
+
+      <!-- Mostrar formulario solo si NO se está animando -->
+      <ng-container *ngIf="!animandoLogin">
+        <h2>Iniciar sesión</h2>
+
+        <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+          <div class="form-group">
+            <label for="correo">Correo electrónico</label>
+            <input
+              type="email"
+              id="correo"
+              name="correo"
+              class="form-control"
+              [(ngModel)]="correo"
+              required
+              #correoField="ngModel"
+            />
+            <div *ngIf="correoField.invalid && correoField.touched" class="error">
+              El correo es obligatorio.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="clave">Contraseña</label>
+            <input
+              type="password"
+              id="clave"
+              name="clave"
+              class="form-control"
+              [(ngModel)]="clave"
+              required
+              #claveField="ngModel"
+            />
+            <div *ngIf="claveField.invalid && claveField.touched" class="error">
+              La contraseña es obligatoria.
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">
+            Iniciar sesión
+          </button>
+        </form>
+
+        <div *ngIf="errorMessage" class="error-message">
+          {{ errorMessage }}
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

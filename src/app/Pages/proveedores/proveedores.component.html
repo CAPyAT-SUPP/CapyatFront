@@ -1,0 +1,121 @@
+<mat-card class="proveedores-card">
+  <!-- Encabezado con título y botones -->
+  <mat-card-header class="header-container">
+    <div class="botones-izquierda">
+      <button mat-mini-fab class="boton-pdf" (click)="generarPDF()">
+        <mat-icon>picture_as_pdf</mat-icon>
+      </button>
+      <button mat-mini-fab class="boton-verde" (click)="nuevo()"  *ngIf="userRole === 'Administrador' || userRole === 'Operativo'">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+    <mat-card-title class="titulo">Lista de proveedores</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <!-- Barra de búsqueda y botón de filtros -->
+    <div class="filter-container">
+      <mat-form-field class="search-field">
+        <mat-label>Buscar proveedor</mat-label>
+        <input matInput (keyup)="aplicarFiltro($event)" placeholder="Escriba el nombre...">
+      </mat-form-field>
+
+      <button mat-icon-button [matMenuTriggerFor]="menuFiltros" #menuTrigger="matMenuTrigger">
+        <mat-icon>filter_list</mat-icon>
+      </button>
+
+      <mat-menu #menuFiltros="matMenu">
+        <button mat-menu-item (click)="ordenar('asc'); menuTrigger.closeMenu()">
+          <mat-icon>arrow_upward</mat-icon> Orden A-Z
+        </button>
+        <button mat-menu-item (click)="ordenar('desc'); menuTrigger.closeMenu()">
+          <mat-icon>arrow_downward</mat-icon> Orden Z-A
+        </button>
+        <mat-divider></mat-divider>
+
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="resetearFiltros(); menuTrigger.closeMenu()">
+          <mat-icon>clear</mat-icon> Restablecer filtros
+        </button>
+      </mat-menu>
+    </div>
+
+    <!-- Tabla de proveedores -->
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z2 table-container">
+
+      <ng-container matColumnDef="IDProveedor">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let element"> {{ element.IDProveedor }} </td>
+      </ng-container>
+      
+      <ng-container matColumnDef="NombreProveedor">
+        <th mat-header-cell *matHeaderCellDef> Nombre </th>
+        <td mat-cell *matCellDef="let element"> {{ element.NombreProveedor }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="ClaveProveedor">
+        <th mat-header-cell *matHeaderCellDef> Clave </th>
+        <td mat-cell *matCellDef="let element"> {{ element.ClaveProveedor }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="CalleProveedor">
+        <th mat-header-cell *matHeaderCellDef> Calle </th>
+        <td mat-cell *matCellDef="let element"> {{ element.CalleProveedor }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="NoIntProveedor">
+        <th mat-header-cell *matHeaderCellDef> No.Int </th>
+        <td mat-cell *matCellDef="let element"> {{ element.NoIntProveedor }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="NoExtProveedor">
+        <th mat-header-cell *matHeaderCellDef> No.Ext </th>
+        <td mat-cell *matCellDef="let element"> {{ element.NoExtProveedor }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="CP">
+        <th mat-header-cell *matHeaderCellDef> CP </th>
+        <td mat-cell *matCellDef="let element"> {{ element.CP }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Municipio">
+        <th mat-header-cell *matHeaderCellDef> Municipio </th>
+        <td mat-cell *matCellDef="let element"> {{ element.Municipio }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="ColoniaProveedor">
+        <th mat-header-cell *matHeaderCellDef> Colonia </th>
+        <td mat-cell *matCellDef="let element"> {{ element.ColoniaProveedor }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Estado">
+        <th mat-header-cell *matHeaderCellDef> Estado </th>
+        <td mat-cell *matCellDef="let element"> {{ element.Estado }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="RFC">
+        <th mat-header-cell *matHeaderCellDef> RFC </th>
+        <td mat-cell *matCellDef="let element"> {{ element.RFC }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="accion">
+        <th mat-header-cell *matHeaderCellDef> Acciones </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-mini-fab color="primary" (click)="editar(element)" *ngIf="userRole === 'Administrador' || userRole === 'Operativo'">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-mini-fab color="warn" (click)="eliminar(element)" *ngIf="userRole === 'Administrador'">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <!-- Paginador -->
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+  </mat-card-content>
+</mat-card>

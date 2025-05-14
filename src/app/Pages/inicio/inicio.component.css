@@ -1,0 +1,30 @@
+.logo {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-left: 16px;
+  }
+  
+  .spacer {
+    flex: 1 1 auto;
+  }
+  
+  .user-button, .logout-button {
+    margin-left: 8px;
+  }
+  
+  .user-button:hover, .logout-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  mat-sidenav {
+    width: 250px;
+  }
+  
+  mat-nav-list a {
+    display: flex;
+    align-items: center;
+  }
+  
+  mat-nav-list mat-icon {
+    margin-right: 8px;
+  }

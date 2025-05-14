@@ -1,0 +1,143 @@
+/* Sidebar actualizado */
+.sidebar {
+  width: 220px;
+  background-color: #7a003c;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Para que el logout quede abajo */
+  padding: 20px 0;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Logo */
+.logo img {
+  width: 80%;
+  background-color: #ffffff;
+  max-width: 140px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  transition: transform 0.3s ease;
+  border-radius: 20%;
+}
+.logo img:hover {
+  transform: scale(1.05);
+}
+
+/* Elementos del sidebar */
+.sidebar-list {
+  display: flex;
+   align-self: flex-start;
+  flex-direction: column;
+  margin-top: 30px;
+  padding: 0 20px;
+}
+
+.sidebar-item {
+  font-size: 18px;
+  padding: 12px;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.sidebar-item:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.sidebar-icon {
+  font-size: 22px;
+  margin-right: 10px;
+  color: white !important;
+}
+
+.sidebar-text {
+  font-size: 18px;
+  color: white !important;
+}
+
+/* Botón de cerrar sesión */
+.logout-button {
+  background-color: #bc955b;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  align-self: flex-start;
+  text-align: center;
+  cursor: pointer;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #a8834c;
+}
+
+/* Topbar */
+.toolbar {
+  background-color: #7a003c;
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 12px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.toolbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.toolbar-text {
+  font-size: 16px;
+  font-weight: 400;
+  color: white;
+  margin-right: 40px;
+}
+
+.toolbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.username {
+  font-size: 18px;
+  margin-right: 20px;
+  font-weight: 500;
+  color: white;
+}
+
+.spacer {
+  flex-grow: 1;
+}
+
+/* Footer */
+.footer {
+  background-color: #7a003c;
+  color: white;
+  text-align: center;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 400;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  margin-top: auto;
+}
+
+.logout-container {
+  margin-top: 200px; /* Ajusta este valor según lo que consideres "más abajo" */
+  padding-left: 20px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+

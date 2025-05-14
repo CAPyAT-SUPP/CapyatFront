@@ -1,0 +1,135 @@
+<h2 mat-dialog-title>Editar Movimiento</h2>
+
+<form [formGroup]="movimientoForm" (ngSubmit)="guardar()">
+  <mat-dialog-content>
+    <div class="grid grid-cols-2 gap-4">
+      <!-- Tipo de Movimiento -->
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Tipo de Movimiento</mat-label>
+        <mat-select formControlName="IDTipoMovimiento" required>
+          <mat-option *ngFor="let tipo of tiposMovimiento" [value]="tipo.idTipoMovimiento">
+            {{ tipo.tipoMovimientoDes }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Fecha -->
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Fecha</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="FechaMovimiento" required />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <!-- Trabajador -->
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Trabajador</mat-label>
+        <mat-select formControlName="IDTrabajador" required>
+          <mat-option *ngFor="let t of trabajadores" [value]="t.idTrabajador">
+            {{ t.nombreTrabajador }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Almacén -->
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Almacén</mat-label>
+        <mat-select formControlName="IDAlmacen" required>
+          <mat-option *ngFor="let a of almacenes" [value]="a.idAlmacen">
+            {{ a.nombreAlmacen }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <mat-divider class="my-4"></mat-divider>
+
+    <!-- Tabla dinámica de materiales -->
+    <div class="overflow-auto">
+      <table mat-table #table [dataSource]="detalles.controls" class="mat-elevation-z8 min-w-full">
+        <!-- Columnas -->
+        <ng-container matColumnDef="material">
+          <th mat-header-cell *matHeaderCellDef>Material</th>
+          <td mat-cell *matCellDef="let detalle; let i = index" [formGroup]="detalle">
+            <mat-form-field appearance="outline" class="w-full">
+              <mat-label>Material</mat-label>
+              <mat-select formControlName="IDMaterial" required
+                (selectionChange)="onSeleccionMaterial(detalle, $event.value, i)">
+                <mat-option *ngFor="let m of materialesDisponibles" [value]="m.idMaterial"
+                  [disabled]="materialYaSeleccionado(m.idMaterial) && detalle.get('IDMaterial')?.value !== m.idMaterial">
+                  {{ m.nombreMaterial }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="detalle.get('error')?.value === 'material_duplicado'">
+                Material duplicado
+              </mat-error>
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="cantidad">
+          <th mat-header-cell *matHeaderCellDef>Cantidad</th>
+          <td mat-cell *matCellDef="let detalle; let i = index" [formGroup]="detalle">
+            <mat-form-field appearance="outline" class="w-24">
+              <mat-label>Cantidad</mat-label>
+              <input matInput type="number" min="1" formControlName="Cantidad" (change)="actualizarCantidad(detalle)"
+                required />
+              <mat-error *ngIf="detalle.get('error')?.value === 'cantidad_invalida'">
+                Cantidad inválida
+              </mat-error>
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="costoUnitario">
+          <th mat-header-cell *matHeaderCellDef>Costo Unitario</th>
+          <td mat-cell *matCellDef="let detalle">
+            {{ detalle.get('CostoUnitario')?.value | currency }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="costoTotal">
+          <th mat-header-cell *matHeaderCellDef>Costo Total</th>
+          <td mat-cell *matCellDef="let detalle">
+            <span *ngIf="!detalle.get('error')?.value">{{ detalle.get('CostoTotal')?.value | currency }}</span>
+            <span *ngIf="detalle.get('error')?.value === 'stock_excedido'" class="text-red-500">Stock
+              insuficiente</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef>Acciones</th>
+          <td mat-cell *matCellDef="let detalle; let i = index">
+            <button mat-icon-button color="warn" (click)="eliminarDetalle(i)" [disabled]="detalles.length === 1">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <!-- Encabezados y filas -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+
+    <!-- Botón para agregar nuevo material -->
+    <div class="my-4 text-right">
+      <button mat-raised-button color="primary" type="button" (click)="agregarDetalle()">
+        <mat-icon>add</mat-icon> Agregar Material
+      </button>
+    </div>
+
+    <!-- Total General -->
+    <mat-divider></mat-divider>
+    <div class="text-right mt-4">
+      <h3>Total General: {{ obtenerImporteTotal() | currency }}</h3>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancelar</button>
+    <button mat-flat-button color="primary" type="submit" [disabled]="movimientoForm.invalid">
+      Guardar
+    </button>
+  </mat-dialog-actions>
+</form>

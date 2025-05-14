@@ -1,0 +1,40 @@
+<mat-dialog-content class="dialog-content">
+
+    <h2 mat-dialog-title>Registrar trabajador</h2>
+  
+  <!-- Nombre -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Nombre</mat-label>
+    <input matInput [(ngModel)]="nuevoTrabajador.NombreTrabajador" required>
+  </mat-form-field>
+
+  <!-- Zona -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Zona</mat-label>
+    <mat-select [(ngModel)]="nuevoTrabajador.IDZona" required>
+      <mat-option *ngFor="let zona of zonas" [value]="zona.idZona" required>
+        {{ zona.nombreZona }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <!-- Área -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Área</mat-label>
+    <mat-select [(ngModel)]="nuevoTrabajador.IDArea" required>
+      <mat-option *ngFor="let area of areas" [value]="area.idArea">
+        {{ area.nombreArea }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="center">
+    <button mat-button (click)="cerrar()">Cancelar</button>
+    <button mat-flat-button color="primary" (click)="registrar()" 
+      [disabled]="!nuevoTrabajador.NombreTrabajador || !nuevoTrabajador.IDZona || !nuevoTrabajador.IDArea">
+      Guardar
+    </button>
+  </mat-dialog-actions>
+  

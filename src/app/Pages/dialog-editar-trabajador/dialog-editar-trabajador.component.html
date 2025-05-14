@@ -1,0 +1,35 @@
+<mat-dialog-content class="dialog-content">
+  <h2 class="title">Editar Trabajador</h2>
+
+  <form>
+    <mat-form-field class="full-width">
+      <mat-label>Nombre</mat-label>
+      <input matInput [(ngModel)]="trabajador.NombreTrabajador" name="nombre" required>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Zona</mat-label>
+      <mat-select [(ngModel)]="trabajador.IDZona" name="zona" required>
+        <mat-option *ngFor="let zona of zonas" [value]="zona.idZona">
+          {{ zona.nombreZona }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Área</mat-label>
+      <mat-select [(ngModel)]="trabajador.IDArea" name="area" required>
+        <mat-option *ngFor="let area of areas" [value]="area.idArea">
+          {{ area.nombreArea }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions class="dialog-actions">
+  <button mat-button (click)="cerrar()">Cancelar</button>
+  <button mat-flat-button color="primary" (click)="guardarCambios()" [disabled]="!formularioValido">
+    Guardar
+  </button>
+</mat-dialog-actions>

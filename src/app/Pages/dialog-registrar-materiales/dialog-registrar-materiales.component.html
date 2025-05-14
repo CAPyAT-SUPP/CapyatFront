@@ -1,0 +1,97 @@
+<mat-dialog-content class="dialog-content">
+  <h2 class="dialog-title">Registrar Material</h2>
+
+  <!-- Nombre -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Nombre del Material</mat-label>
+    <input matInput [(ngModel)]="nuevoMaterial.NombreMaterial" required>
+    <mat-error *ngIf="nombreInvalido">Este campo es obligatorio.</mat-error>
+  </mat-form-field>
+
+  <!-- Descripción -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Descripción</mat-label>
+    <input matInput [(ngModel)]="nuevoMaterial.DescripcionMaterial" required>
+    <mat-error *ngIf="descripcionInvalida">Este campo es obligatorio.</mat-error>
+  </mat-form-field>
+
+  <!-- Cantidad -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Cantidad</mat-label>
+    <input matInput type="number" [(ngModel)]="nuevoMaterial.CantidadMaterial" required min="0">
+    <mat-error *ngIf="cantidadInvalida">Debe ser un número mayor a 0.</mat-error>
+  </mat-form-field>
+
+  <!-- Costo Unitario -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Costo Unitario</mat-label>
+    <input matInput type="number" [(ngModel)]="nuevoMaterial.CostoUnitario" required min="1">
+    <mat-error *ngIf="costoUnitarioInvalido">Debe ser un número mayor a 0.</mat-error>
+  </mat-form-field>
+
+  <!-- Descuento -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Descuento ($)</mat-label>
+    <input matInput type="number" [(ngModel)]="nuevoMaterial.Descuento" min="0">
+    <mat-error *ngIf="descuentoInvalido">Debe ser mayor a 0</mat-error>
+  </mat-form-field>
+
+  <!-- IVA -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>IVA (%)</mat-label>
+    <input matInput type="number" [(ngModel)]="nuevoMaterial.IVA" min="0.16" max="0.16">
+    <mat-error *ngIf="ivaInvalido">Debe estar entre 0 y 100.</mat-error>
+  </mat-form-field>
+
+  <!-- Costo Total  -->
+  <mat-form-field appearance="outline"  class="full-width">
+    <mat-label>Costo Total</mat-label>
+    <input matInput [(ngModel)]="nuevoMaterial.CostoTotal" type="number" required>
+  </mat-form-field>
+  
+
+  <!-- Stock Actual -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Stock Actual</mat-label>
+    <input matInput type="number" [(ngModel)]="nuevoMaterial.StockActual" required min="0">
+    <mat-error *ngIf="stockInvalido">Debe ser un número mayor o igual a 0.</mat-error>
+  </mat-form-field>
+
+  <!-- Categoría -->
+<mat-form-field appearance="outline">
+  <mat-label>Categoría*</mat-label>
+  <mat-select [(ngModel)]="nuevoMaterial.IDCategoria" required>
+    <mat-option *ngFor="let categoria of categorias" [value]="categoria.IDCategoria">
+      {{ categoria.NombreCategoria }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>  
+
+<!-- Proveedor -->
+<mat-form-field appearance="outline">
+  <mat-label>Proveedor*</mat-label>
+  <mat-select [(ngModel)]="nuevoMaterial.IDProveedor" required>
+    <mat-option *ngFor="let proveedor of proveedores" [value]="proveedor.IDProveedor">
+      {{ proveedor.NombreProveedor }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+  <!-- Imagen -->
+  <div class="image-upload">
+    <label for="fileInput" class="upload-box">
+      <span *ngIf="!imagenPreview" class="upload-text">Selecciona una imagen<br>(Máx. 2MB)</span>
+      <img *ngIf="imagenPreview" [src]="imagenPreview" alt="Vista previa">
+    </label>
+    <input id="fileInput" type="file" (change)="onFileSelected($event)" accept="image/*">
+    <mat-error *ngIf="imagenInvalida" class="image-error">La imagen excede los 2 MB. Por favor, selecciona otra.</mat-error>
+  </div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cerrar()">Cancelar</button>
+  <button mat-flat-button color="primary" (click)="registrar()" [disabled]="!formularioValido">
+    Guardar
+  </button>
+</mat-dialog-actions>

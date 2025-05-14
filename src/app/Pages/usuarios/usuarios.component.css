@@ -1,0 +1,72 @@
+/* Estilos generales */
+mat-card {
+    width: 70%;
+    margin: 50px auto;
+  }
+  
+  /* Encabezado con botones alineados */
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  /* Botones a la izquierda del encabezado */
+  .botones-izquierda {
+    display: flex;
+    gap: 8px;
+  }
+  
+  .boton-verde {
+    background-color: #4CAF50; /* Verde */
+    color: white;
+  }
+  
+  .boton-verde:hover {
+    background-color: #388E3C;
+  }
+  
+  .boton-pdf {
+    background-color: rgb(197, 47, 47);
+    color: white;
+  }
+  
+  .boton-pdf:hover {
+    background-color: rgb(150, 30, 30);
+  }
+  
+  /* Título alineado a la derecha */
+  .titulo {
+    text-align: right;
+    flex-grow: 1;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #7A003C; /* Puedes ajustar al color institucional si aplica */
+  }
+  
+  /* Contenedor de filtros */
+  .filter-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .search-field {
+    flex: 1;
+  }
+  
+  .filter-field {
+    width: 100%;
+  }
+  
+  /* Estilos de la tabla */
+  .table-container {
+    margin-top: 20px;
+  }
+  
+  mat-mini-fab {
+    width: 36px;
+    height: 36px;
+  }
+  

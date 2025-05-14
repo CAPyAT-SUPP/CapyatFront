@@ -1,0 +1,86 @@
+<mat-dialog-content class="dialog-content">
+  <h2 class="title">Editar Material</h2>
+
+  <form>
+
+    <!-- Imagen -->
+    <div class="image-preview" (click)="onImageClick()">
+      <img *ngIf="imagenPreview" [src]="imagenPreview" alt="Imagen del material" class="imagen" />
+      <div *ngIf="!imagenPreview" class="placeholder">Haz clic para cargar imagen</div>
+    </div>
+
+    <!-- Nombre del material -->
+    <mat-form-field class="full-width">
+      <mat-label>Nombre del material</mat-label>
+      <input matInput [(ngModel)]="material.NombreMaterial" name="nombre" required>
+    </mat-form-field>
+
+    <!-- Descripción del material -->
+    <mat-form-field class="full-width">
+      <mat-label>Descripción</mat-label>
+      <input matInput [(ngModel)]="material.DescripcionMaterial" name="descripcion" required>
+    </mat-form-field>
+
+    <!-- Cantidad del material -->
+    <mat-form-field class="full-width">
+      <mat-label>Cantidad</mat-label>
+      <input matInput type="number" [(ngModel)]="material.CantidadMaterial" name="cantidad" required>
+    </mat-form-field>
+
+    <!-- Proveedor -->
+    <mat-form-field class="full-width">
+      <mat-label>Proveedor</mat-label>
+      <mat-select [(ngModel)]="material.IDProveedor" name="proveedor" required>
+        <mat-option *ngFor="let proveedor of proveedores" [value]="proveedor.idProveedor">
+          {{ proveedor.nombreProveedor }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Categoría -->
+    <mat-form-field class="full-width">
+      <mat-label>Categoría</mat-label>
+      <mat-select [(ngModel)]="material.IDCategoria" name="categoria" required>
+        <mat-option *ngFor="let categoria of categorias" [value]="categoria.idCategoria">
+          {{ categoria.nombreCategoria }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Stock -->
+    <mat-form-field class="full-width">
+      <mat-label>Stock actual</mat-label>
+      <input matInput type="number" [(ngModel)]="material.StockActual" name="stock" (input)="actualizarCostoTotal()" required>
+    </mat-form-field>
+
+    <!-- Costo unitario -->
+    <mat-form-field class="full-width">
+      <mat-label>Costo unitario</mat-label>
+      <input matInput type="number" [(ngModel)]="material.CostoUnitario" name="costo" (input)="actualizarCostoTotal()" required>
+    </mat-form-field>
+
+    <!-- Descuento -->
+    <mat-form-field class="full-width">
+      <mat-label>Descuento</mat-label>
+      <input matInput type="number" [(ngModel)]="material.Descuento" name="descuento" (input)="actualizarCostoTotal()" required>
+    </mat-form-field>
+
+    <!-- IVA -->
+    <mat-form-field class="full-width">
+      <mat-label>IVA (%)</mat-label>
+      <input matInput type="number" [(ngModel)]="material.IVA" name="iva" (input)="actualizarCostoTotal()" required>
+    </mat-form-field>
+
+    <!-- Costo total (solo lectura) -->
+    <mat-form-field class="full-width">
+      <mat-label>Costo total</mat-label>
+      <input matInput [value]="material.CostoTotal" readonly>
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions class="dialog-actions">
+  <button mat-button (click)="cerrar()">Cancelar</button>
+  <button mat-flat-button color="primary" (click)="guardarCambios()">Guardar</button>
+</mat-dialog-actions>
