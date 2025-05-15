@@ -48,8 +48,9 @@
   <mat-card class="card card-full-width">
     <mat-card-title>Entradas entre fechas</mat-card-title>
     <mat-card-content>
+      <!--
       <div class="date-fields-container">
-        <!-- Fecha Desde -->
+         Fecha Desde 
         <mat-form-field appearance="fill">
           <mat-label>Desde</mat-label>
           <input matInput [matDatepicker]="picker1" [(ngModel)]="fechaInicio" required>
@@ -57,14 +58,15 @@
           <mat-datepicker #picker1></mat-datepicker>
         </mat-form-field>
 
-        <!-- Fecha Hasta -->
+         Fecha Hasta
         <mat-form-field appearance="fill">
           <mat-label>Hasta</mat-label>
           <input matInput [matDatepicker]="picker2" [(ngModel)]="fechaFin" required>
           <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
           <mat-datepicker #picker2></mat-datepicker>
-        </mat-form-field>
+        </mat-form-field> 
       </div>
+        -->
 
       <button mat-raised-button color="primary" (click)="consultarEntradas()">Consultar</button>
 
